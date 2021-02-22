@@ -1,17 +1,6 @@
 import React from 'react'
-import './PlayerForm.css'
 
-export default function PlayerForm({ onPlayerAdd }) {
-  function handleSubmit(event) {
-    event.preventDefault()
-    const form = event.target
-    const input = form.elements.player
-    const name = input.value
-    onPlayerAdd(name)
-    form.reset()
-    input.focus()
-  }
-
+export default function PlayerForm({ onAddPlayer }) {
   return (
     <form className="PlayerForm" onSubmit={handleSubmit}>
       <label>
@@ -21,4 +10,14 @@ export default function PlayerForm({ onPlayerAdd }) {
       </label>
     </form>
   )
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    const form = event.target
+    const input = form.elements.player
+    const name = input.value
+    onAddPlayer(name)
+    form.reset()
+    input.focus()
+  }
 }
