@@ -26,7 +26,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header text={games[0].nameOfGame} />
+      <Header text={games[1].nameOfGame} />
       <GameForm onCreateGame={createGame} />
       <Navigation onNavigate={navigate} activeIndex={page} />
       {games.map(game => {

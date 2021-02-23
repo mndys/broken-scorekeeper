@@ -22,8 +22,8 @@ export default function GameForm({ onCreateGame }) {
   function handleSubmit(event) {
     event.preventDefault()
     const form = event.target
-    const inputFieldGame = form[0]
-    const inputFieldPlayers = form[1]
+    const inputFieldGame = form.elements.game
+    const inputFieldPlayers = form.elements.players
     const inputGame = inputFieldGame.value
     const inputPlayers = inputFieldPlayers.value
     onCreateGame(inputGame, inputPlayers)
