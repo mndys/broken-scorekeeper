@@ -1,16 +1,29 @@
 import React from 'react'
-import './Player.css'
+import styled from 'styled-components/macro'
 import Button from './Button'
 
 export default function Player({ name, score, onMinus, onPlus }) {
   return (
-    <section className="Player">
+    <SectionPlayer>
       {name}
-      <div className="Player__score">
-        <Button text="-" onClick={onMinus} />
+      <div>
+        <Button onClick={onMinus}>-</Button>
         <span>{score}</span>
-        <Button text="+" onClick={onPlus} />
+        <Button onClick={onPlus}>+</Button>
       </div>
-    </section>
+    </SectionPlayer>
   )
 }
+
+const SectionPlayer = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  div {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: repeat(3, 1fr);
+    place-items: center;
+  }
+`
