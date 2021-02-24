@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-import './App.css'
 import Button from './Button'
 import Player from './Player'
 import PlayerForm from './PlayerForm'
+
+import styled from 'styled-components/macro'
 
 function App() {
   const [players, setPlayers] = useState([])
 
   return (
-    <div className="App">
+    <AppGrid>
       <PlayerForm onAddPlayer={addPlayer} />
       {players.map(({ name, score, id }, index) => (
         <Player
@@ -19,9 +20,9 @@ function App() {
           onMinus={() => onMinus(index)}
         />
       ))}
-      <Button text="Reset scores" onClick={resetScores} />
-      <Button text="Reset all" onClick={resetAll} />
-    </div>
+      <Button onClick={resetScores}>Reset scores</Button>
+      <Button onClick={resetAll}>Reset all</Button>
+    </AppGrid>
   )
 
   function onPlus(index) {
@@ -53,4 +54,9 @@ function App() {
   }
 }
 
+const AppGrid = styled.div`
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+`
 export default App
