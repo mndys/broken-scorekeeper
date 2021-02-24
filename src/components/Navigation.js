@@ -1,37 +1,26 @@
 import React from 'react'
+import styled from 'styled-components'
 import Button from './Button'
-import styled from 'styled-components/macro'
 
 export default function Navigation({ onNavigate, currentPage }) {
   return (
-    <Nav className="Navigation">
+    <Nav>
       <Button
-        className={currentPage === 'Play' && 'Navigation__Button--active'}
-        onClick={handleClick}
+        isActive={currentPage === 'play'}
+        onClick={() => onNavigate('play')}
       >
         Play
       </Button>
       <Button
-        className={currentPage === 'History' && 'Navigation__Button--active'}
-        onClick={handleClick}
+        isActive={currentPage === 'history'}
+        onClick={() => onNavigate('history')}
       >
         History
       </Button>
     </Nav>
   )
-
-  function handleClick(event) {
-    const clickedButton = event.target.innerHTML
-    console.log(clickedButton)
-    event.preventDefault()
-    onNavigate(clickedButton)
-  }
 }
 
 const Nav = styled.nav`
   display: flex;
-  justify-content: space-between;
-  .Navigation__Button--active {
-    background: #fb1;
-  }
 `

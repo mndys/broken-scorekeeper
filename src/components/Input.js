@@ -1,17 +1,20 @@
-import styled from 'styled-components/macro'
 import React from 'react'
+import styled from 'styled-components'
 
-export default function Input({ labelText, placeholderText, name }) {
+export default function Input({ labelText, placeholder, name }) {
   return (
-    <InputStyled>
+    <Label>
       {labelText}
-      <input placeholder={placeholderText} name={name}></input>
-    </InputStyled>
+      <InputStyled name={name} placeholder={placeholder} type="text" />
+    </Label>
   )
 }
 
-const InputStyled = styled.label`
-  input {
-    width: 100%;
-  }
+const Label = styled.label`
+  display: grid;
+  gap: 4px;
+`
+
+const InputStyled = styled.input`
+  border: 2px solid #bbb;
 `

@@ -1,8 +1,7 @@
-import styled from 'styled-components/macro'
+import React from 'react'
+import styled from 'styled-components'
 
-const Header = styled.header`
+export default styled.header`
+  padding: 12px;
   text-align: center;
-  background: #fb1;
 `
-
-export default Header

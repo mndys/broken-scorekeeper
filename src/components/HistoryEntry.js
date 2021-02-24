@@ -1,23 +1,26 @@
-import styled from 'styled-components/macro'
 import React from 'react'
+import styled from 'styled-components'
 
 export default function HistoryEntry({ nameOfGame, players }) {
   return (
-    <Entry>
-      <h2>{nameOfGame}</h2>
-      {players.map(player => (
-        <div className="HistoryEntry__player">
-          <div>{player.name}</div>
-          <div>{player.score}</div>
-        </div>
+    <Wrapper>
+      {nameOfGame}
+      {players.map((player, index) => (
+        <Player key={index}>
+          <span>{player.name}</span>
+          <span>{player.score}</span>
+        </Player>
       ))}
-    </Entry>
+    </Wrapper>
   )
 }
 
-const Entry = styled.section`
-  div {
-    display: flex;
-    justify-content: space-between;
-  }
+const Wrapper = styled.section`
+  display: grid;
+  gap: 10px;
+`
+
+const Player = styled.div`
+  display: flex;
+  justify-content: space-between;
 `

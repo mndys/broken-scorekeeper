@@ -1,107 +1,103 @@
+import { useState } from 'react'
+import styled from 'styled-components/macro'
 import Button from './Button'
 import GameForm from './GameForm'
 import Header from './Header'
 import HistoryEntry from './HistoryEntry'
 import Navigation from './Navigation'
 import Player from './Player'
-import PlayerForm from './PlayerForm'
-import React, { useState } from 'react'
-import styled from 'styled-components/macro'
+import { v4 as uuidv4 } from 'uuid'
 
-function App() {
+export default function App() {
   const [players, setPlayers] = useState([])
-  const [games, setGames] = useState([
-    {
-      nameOfGame: 'Carcassonne',
-      playerNames: [
-        { name: 'Jerry', score: 100 },
-        { name: 'Jakob', score: 500 },
-      ],
-    },
-    {
-      nameOfGame: `Wizard's Chess`,
-      playerNames: [
-        { name: 'Lene', score: 100 },
-        { name: 'Ron', score: 5 },
-      ],
-    },
-  ])
-  const [page, setPage] = useState('Play')
+  const [nameOfGame, setNameOfGame] = useState('')
+  const [currentPage, setCurrentPage] = useState('play')
+  const [history, setHistory] = useState([])
 
   return (
-    <AppGrid>
-      <PlayerForm onAddPlayer={addPlayer} />
-      {players.map(({ name, score, id }, index) => (
-        <Player
-          key={id}
-          name={name}
-          score={score}
-          onPlus={() => onPlus(index)}
-          onMinus={() => onMinus(index)}
-        />
-      ))}
-      <Button onClick={resetScores}>Reset scores</Button>
-      <Button onClick={resetAll}>Reset all</Button>
-      <Header>{games[1].nameOfGame}</Header>
-      <GameForm onCreateGame={createGame} />
-      <Navigation onNavigate={setPage} currentPage={page} />
-      {games.map(game => {
-        return (
-          <HistoryEntry
-            nameOfGame={game.nameOfGame}
-            players={game.playerNames}
-          />
-        )
-      })}
-    </AppGrid>
+    <AppLayout>
+      {/* conditional rendering */}
+      {currentPage === 'play' && (
+        <div>
+          <GameForm onCreateGame={createGame} />
+        </div>
+      )}
+
+      {currentPage === 'game' && (
+        <div>
+          <Header>{nameOfGame}</Header>
+          {players.map(({ name, score }, index) => (
+            <Player
+              key={name}
+              name={name}
+              score={score}
+              onPlus={() => handlePlus(index)}
+              onMinus={() => handleMinus(index)}
+            />
+          ))}
+          <Button onClick={resetScores}>Reset scores</Button>
+          <Button onClick={endGame}>End game</Button>
+        </div>
+      )}
+
+      {currentPage === 'history' && (
+        <HistoryWrapper>
+          {history.map(({ nameOfGame, players, id }) => (
+            <HistoryEntry key={id} nameOfGame={nameOfGame} players={players} />
+          ))}
+        </HistoryWrapper>
+      )}
+
+      {(currentPage === 'play' || currentPage === 'history') && (
+        <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
+      )}
+    </AppLayout>
   )
 
-  function onPlus(index) {
-    setPlayers(players => [
-      ...players.slice(0, index),
-      { ...players[index], score: players[index].score + 1 },
-      ...players.slice(index + 1),
-    ])
+  function createGame({ nameOfGame, playerNames }) {
+    // playerNames is ['Jane', 'John']
+    setNameOfGame(nameOfGame)
+    setPlayers(playerNames.map(name => ({ name, score: 0 })))
+    setCurrentPage('game')
   }
 
-  function onMinus(index) {
-    setPlayers(players => [
-      ...players.slice(0, index),
-      { ...players[index], score: players[index].score - 1 },
-      ...players.slice(index + 1),
-    ])
-  }
-
-  function addPlayer(name) {
-    setPlayers([...players, { name, score: 0, id: players.length + 1 }])
+  function endGame() {
+    setHistory([{ players, nameOfGame, id: uuidv4() }, ...history])
+    setPlayers([])
+    setNameOfGame('')
+    setCurrentPage('play')
   }
 
   function resetScores() {
     setPlayers(players.map(player => ({ ...player, score: 0 })))
   }
 
-  function resetAll() {
-    setPlayers([])
+  function handlePlus(index) {
+    const currentPlayer = players[index]
+    setPlayers([
+      ...players.slice(0, index),
+      { ...currentPlayer, score: currentPlayer.score + 1 },
+      ...players.slice(index + 1),
+    ])
   }
 
-  function createGame(inputGame, inputPlayers) {
-    setGames([
-      ...games,
-      {
-        nameOfGame: inputGame,
-        playerNames: inputPlayers
-          .split(',')
-          .map(player => ({ name: player.trim(), score: 0 })),
-      },
+  function handleMinus(index) {
+    const currentPlayer = players[index]
+    setPlayers([
+      ...players.slice(0, index),
+      { ...currentPlayer, score: currentPlayer.score - 1 },
+      ...players.slice(index + 1),
     ])
   }
 }
 
-const AppGrid = styled.div`
+const AppLayout = styled.div`
   display: grid;
   gap: 20px;
   padding: 20px;
-  max-width: 500px;
-  margin: 0 auto;
 `
-export default App
+
+const HistoryWrapper = styled.div`
+  display: grid;
+  gap: 28px;
+`
