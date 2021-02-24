@@ -4,7 +4,7 @@ import Button from './Button'
 
 export default function Player({ name, score, onMinus, onPlus }) {
   return (
-    <SectionPlayer>
+    <SectionPlayer score={score}>
       {name}
       <div>
         <Button onClick={onMinus}>-</Button>
@@ -25,5 +25,9 @@ const SectionPlayer = styled.section`
     gap: 5px;
     grid-template-columns: repeat(3, 1fr);
     place-items: center;
+
+    span {
+      color: hsl(${props => props.score * 10}, 50%, 50%);
+    }
   }
 `
