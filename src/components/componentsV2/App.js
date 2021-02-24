@@ -28,7 +28,7 @@ function App() {
     <AppGrid>
       <Header>{games[1].nameOfGame}</Header>
       <GameForm onCreateGame={createGame} />
-      <Navigation onNavigate={navigate} activeIndex={page} />
+      <Navigation onNavigate={navigate} currentPage={page} />
       {games.map(game => {
         return (
           <HistoryEntry
@@ -52,8 +52,8 @@ function App() {
     ])
   }
 
-  function navigate(activeIndex) {
-    setPage(activeIndex)
+  function navigate(currentPage) {
+    setPage(currentPage)
   }
 }
 

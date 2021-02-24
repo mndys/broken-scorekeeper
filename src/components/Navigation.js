@@ -2,17 +2,17 @@ import React from 'react'
 import Button from './Button'
 import styled from 'styled-components/macro'
 
-export default function Navigation({ onNavigate, activeIndex }) {
+export default function Navigation({ onNavigate, currentPage }) {
   return (
     <Nav className="Navigation">
       <Button
-        className={activeIndex === 'Play' && 'Navigation__Button--active'}
+        className={currentPage === 'Play' && 'Navigation__Button--active'}
         onClick={handleClick}
       >
         Play
       </Button>
       <Button
-        className={activeIndex === 'History' && 'Navigation__Button--active'}
+        className={currentPage === 'History' && 'Navigation__Button--active'}
         onClick={handleClick}
       >
         History
