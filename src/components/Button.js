@@ -1,10 +1,6 @@
-import React from 'react'
-import './Button.css'
+import styled from 'styled-components/macro'
 
-export default function Button({ text, onClick, className = 'Button' }) {
-  return (
-    <button className={className} onClick={onClick}>
-      {text}
-    </button>
-  )
-}
+export default styled.button`
+  padding: 5px;
+  font-size: 16px;
+`
