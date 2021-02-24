@@ -105,5 +105,7 @@ const AppGrid = styled.div`
   display: grid;
   gap: 20px;
   padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
 `
 export default App
