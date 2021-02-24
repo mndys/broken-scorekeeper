@@ -44,7 +44,7 @@ function App() {
       <Button onClick={resetAll}>Reset all</Button>
       <Header>{games[1].nameOfGame}</Header>
       <GameForm onCreateGame={createGame} />
-      <Navigation onNavigate={navigate} currentPage={page} />
+      <Navigation onNavigate={setPage} currentPage={page} />
       {games.map(game => {
         return (
           <HistoryEntry
@@ -94,10 +94,6 @@ function App() {
           .map(player => ({ name: player.trim(), score: 0 })),
       },
     ])
-  }
-
-  function navigate(currentPage) {
-    setPage(currentPage)
   }
 }
 
