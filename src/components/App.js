@@ -1,12 +1,32 @@
-import React, { useState } from 'react'
 import Button from './Button'
+import GameForm from './GameForm'
+import Header from './Header'
+import HistoryEntry from './HistoryEntry'
+import Navigation from './Navigation'
 import Player from './Player'
 import PlayerForm from './PlayerForm'
-
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 
 function App() {
   const [players, setPlayers] = useState([])
+  const [games, setGames] = useState([
+    {
+      nameOfGame: 'Carcassonne',
+      playerNames: [
+        { name: 'Jerry', score: 100 },
+        { name: 'Jakob', score: 500 },
+      ],
+    },
+    {
+      nameOfGame: `Wizard's Chess`,
+      playerNames: [
+        { name: 'Lene', score: 100 },
+        { name: 'Ron', score: 5 },
+      ],
+    },
+  ])
+  const [page, setPage] = useState('Play')
 
   return (
     <AppGrid>
@@ -22,6 +42,17 @@ function App() {
       ))}
       <Button onClick={resetScores}>Reset scores</Button>
       <Button onClick={resetAll}>Reset all</Button>
+      <Header>{games[1].nameOfGame}</Header>
+      <GameForm onCreateGame={createGame} />
+      <Navigation onNavigate={navigate} activeIndex={page} />
+      {games.map(game => {
+        return (
+          <HistoryEntry
+            nameOfGame={game.nameOfGame}
+            players={game.playerNames}
+          />
+        )
+      })}
     </AppGrid>
   )
 
@@ -51,6 +82,22 @@ function App() {
 
   function resetAll() {
     setPlayers([])
+  }
+
+  function createGame(inputGame, inputPlayers) {
+    setGames([
+      ...games,
+      {
+        nameOfGame: inputGame,
+        playerNames: inputPlayers
+          .split(',')
+          .map(player => ({ name: player.trim(), score: 0 })),
+      },
+    ])
+  }
+
+  function navigate(activeIndex) {
+    setPage(activeIndex)
   }
 }
 

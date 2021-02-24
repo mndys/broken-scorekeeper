@@ -1,21 +1,23 @@
 import React from 'react'
-import Button from '../Button'
-import './Navigation.css'
+import Button from './Button'
+import styled from 'styled-components/macro'
 
 export default function Navigation({ onNavigate, activeIndex }) {
   return (
-    <nav className="Navigation">
+    <Nav className="Navigation">
       <Button
         className={activeIndex === 'Play' && 'Navigation__Button--active'}
-        text="Play"
         onClick={handleClick}
-      />
+      >
+        Play
+      </Button>
       <Button
         className={activeIndex === 'History' && 'Navigation__Button--active'}
-        text="History"
         onClick={handleClick}
-      />
-    </nav>
+      >
+        History
+      </Button>
+    </Nav>
   )
 
   function handleClick(event) {
@@ -25,3 +27,11 @@ export default function Navigation({ onNavigate, activeIndex }) {
     onNavigate(clickedButton)
   }
 }
+
+const Nav = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  .Navigation__Button--active {
+    background: #fb1;
+  }
+`

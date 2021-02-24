@@ -1,10 +1,11 @@
+import styled from 'styled-components/macro'
 import React from 'react'
-import Button from '../Button'
+import Button from './Button'
 import Input from './Input'
 
 export default function GameForm({ onCreateGame }) {
   return (
-    <form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <Input
         labelText="Name of Game: "
         placeholderText="e.g. Carcassonne"
@@ -15,8 +16,8 @@ export default function GameForm({ onCreateGame }) {
         placeholderText="e.g. JohnDoe, Jane Doe, ..."
         name="players"
       />
-      <Button text="Create Game" />
-    </form>
+      <Button>Create Game</Button>
+    </Form>
   )
 
   function handleSubmit(event) {
@@ -31,3 +32,9 @@ export default function GameForm({ onCreateGame }) {
     inputFieldGame.focus()
   }
 }
+
+const Form = styled.form`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+`

@@ -1,9 +1,9 @@
+import styled from 'styled-components/macro'
 import React from 'react'
-import './HistoryEntry.css'
 
 export default function HistoryEntry({ nameOfGame, players }) {
   return (
-    <section className="HistoryEntry">
+    <Entry>
       <h2>{nameOfGame}</h2>
       {players.map(player => (
         <div className="HistoryEntry__player">
@@ -11,6 +11,13 @@ export default function HistoryEntry({ nameOfGame, players }) {
           <div>{player.score}</div>
         </div>
       ))}
-    </section>
+    </Entry>
   )
 }
+
+const Entry = styled.section`
+  div {
+    display: flex;
+    justify-content: space-between;
+  }
+`

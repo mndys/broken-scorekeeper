@@ -1,6 +1,6 @@
+import styled from 'styled-components/macro'
 import React, { useState } from 'react'
-import '../App.css'
-import GameForm from './GameForm'
+import GameForm from '../GameForm'
 import Header from './Header'
 import HistoryEntry from './HistoryEntry'
 import Navigation from './Navigation'
@@ -11,7 +11,7 @@ function App() {
       nameOfGame: 'Carcassonne',
       playerNames: [
         { name: 'Jerry', score: 100 },
-        { name: 'Jacob', score: 500 },
+        { name: 'Jakob', score: 500 },
       ],
     },
     {
@@ -25,8 +25,8 @@ function App() {
   const [page, setPage] = useState('Play')
 
   return (
-    <div className="App">
-      <Header text={games[1].nameOfGame} />
+    <AppGrid>
+      <Header>{games[1].nameOfGame}</Header>
       <GameForm onCreateGame={createGame} />
       <Navigation onNavigate={navigate} activeIndex={page} />
       {games.map(game => {
@@ -37,7 +37,7 @@ function App() {
           />
         )
       })}
-    </div>
+    </AppGrid>
   )
 
   function createGame(inputGame, inputPlayers) {
@@ -57,4 +57,9 @@ function App() {
   }
 }
 
+const AppGrid = styled.div`
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+`
 export default App
